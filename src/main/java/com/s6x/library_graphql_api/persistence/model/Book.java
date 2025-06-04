@@ -1,6 +1,6 @@
 package com.s6x.library_graphql_api.persistence.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +45,7 @@ public class Book {
 
     @NotNull(message = "Published date is required")
     @Column(name = "published_date", nullable = false)
-    private LocalDateTime publishedDate;
+    private OffsetDateTime publishedDate;
 
     @Min(value = 1, message = "Pages must be at least 1")
     @Column(nullable = false)
