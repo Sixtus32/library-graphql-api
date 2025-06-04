@@ -1,0 +1,112 @@
+# Scalars
+scalar DateTime
+
+# Enums
+enum Genre {
+  ACTION
+  ADVENTURE
+  COMEDY
+  DRAMA
+  FANTASY
+  FICTION
+  HORROR
+  MYSTERY
+  ROMANCE
+  SCI_FI
+}
+
+# Types
+type Author {
+  id: ID!
+  name: String!
+  email: String!
+  birthDate: DateTime
+  nationality: String
+  biography: String
+  books: [Book!]!
+  booksCount: Int!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  isbn: String!
+  genre: Genre!
+  publishedDate: DateTime!
+  pages: Int!
+  description: String
+  author: Author!
+  available: Boolean!
+}
+
+# Input Types
+input CreateAuthorInput {
+  name: String!
+  email: String!
+  birthDate: DateTime
+  nationality: String
+  biography: String
+}
+
+input UpdateAuthorInput {
+  id: ID!
+  name: String
+  email: String
+  birthDate: DateTime
+  nationality: String
+  biography: String
+}
+
+input CreateBookInput {
+  title: String!
+  isbn: String!
+  genre: Genre!
+  publishedDate: DateTime!
+  pages: Int!
+  description: String
+  authorId: ID!
+  available: Boolean = true
+}
+
+input UpdateBookInput {
+  id: ID!
+  title: String
+  isbn: String
+  genre: Genre
+  publishedDate: DateTime
+  pages: Int
+  description: String
+  authorId: ID
+  available: Boolean
+}
+
+# Queries
+type Query {
+  # Author queries
+  getAllAuthors: [Author!]!
+  getAuthorById(id: ID!): Author
+  getAuthorsByNationality(nationality: String!): [Author!]!
+  searchAuthorsByName(name: String!): [Author!]!
+
+  # Book queries
+  getAllBooks: [Book!]!
+  getBookById(id: ID!): Book
+  getBooksByGenre(genre: Genre!): [Book!]!
+  getBooksByAuthor(authorId: ID!): [Book!]!
+  getAvailableBooks: [Book!]!
+  searchBooksByTitle(title: String!): [Book!]!
+}
+
+# Mutations
+type Mutations {
+  # Author mutations
+  createAuthor(input: CreateAuthorInput!): Author!
+  updateAuthor(input: UpdateAuthorInput!): Author!
+  deleteAuthor(id: ID!): Boolean!
+
+  # Book mutations
+  createBook(input: CreateBookInput!): Book!
+  updateBook(input: UpdateBookInput!): Book!
+  deleteBook(id: ID!): Boolean!
+  toggleBookAvailability(id: ID!): Book!
+}
